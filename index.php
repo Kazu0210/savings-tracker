@@ -91,7 +91,7 @@ $conn->close(); // Close the database connection
     <title>Savings Tracker</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container m-0 p-0">
         <div class="container">
             <h1>Savings Tracker</h1>
         </div>

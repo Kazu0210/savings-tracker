@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/css/bootstrap.min.css">
+    <title>Savings Tracker</title>
+</head>
+<body style="background-color: black;">
+    <div class="container m-0 p-0" style="background-color: red;">
+        <div class="container m-0 p-3" style="background-color: orange;">
+            <h1 class="fs-1 fw-bold text-white text-center">Savings Tracker</h1>
+        </div>
+        <div class="container m-0 p-0" style="background-color: yellow;">
+            <!-- <h3>Current Amount: ₱<?php echo $current_amount; ?> PHP</h3> -->
+             <p class="m-0 p-0 fs-5 fw-medium text-white text-center">Current Amount: $11,100.00</p>
+        </div>
+
+        <div class="container m-0 p-3" style="background-color: green;">
+            <form action="" method="post" class="container m-0 p-0 d-flex gap-3">
+                <button style="width: 250px;" type="submit" name="1_peso" class="btn btn-primary fw-bold">1 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="5_peso" class="btn btn-primary fw-bold">5 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="10_peso" class="btn btn-primary fw-bold">10 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="20_peso" class="btn btn-primary fw-bold">20 Peso Coin</button>
+            </form>
+        </div>
+
+        <div class="container mt-3">
+            <form action="" method="post" class="container m-0 p-0 d-flex flex-column">
+                <div class="container m-0 p-0 ">
+                    <button style="width: 150px; height: 100px;" type="submit" name="20_bill" class="btn btn-success fw-bold">20 Peso Bill</button>
+                    <button style="width: 150px; height: 100px;" type="submit" name="50_bill" class="btn btn-success fw-bold">50 Peso Bill</button>
+                    <button style="width: 150px; height: 100px;" type="submit" name="100_bill" class="btn btn-success fw-bold">100 Peso Bill</button>
+                </div>
+                <div class="container">
+                    <button style="width: 150px; height: 100px;" type="submit" name="200_bill" class="btn btn-success fw-bold">200 Peso Bill</button>
+                    <button style="width: 150px; height: 100px;" type="submit" name="500_bill" class="btn btn-success fw-bold">500 Peso Bill</button>
+                    <button style="width: 150px; height: 100px;" type="submit" name="1000_bill" class="btn btn-success fw-bold">1,000 Peso Bill</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- <div class="container mt-3">
+            <form action="" method="post" onsubmit="return confirmDelete()">
+                <button name="reset-amount-btn" class="btn btn-danger">Reset Amount</button>
+            </form>
+        </div> -->
+    </div>
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete all records? This action cannot be undone.");
+        }
+    </script>
+
+    <script src="styles/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
