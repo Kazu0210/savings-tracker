@@ -90,37 +90,42 @@ $conn->close(); // Close the database connection
     <link rel="stylesheet" href="styles/css/bootstrap.min.css">
     <title>Savings Tracker</title>
 </head>
-<body>
+<body style="background-color: black;">
     <div class="container m-0 p-0">
-        <div class="container">
-            <h1>Savings Tracker</h1>
+        <div class="container m-0 p-3">
+            <h1 class="fs-1 fw-bold text-white text-center">Savings Tracker</h1>
         </div>
-        <div class="container">
-            <h3>Current Amount: ₱<?php echo $current_amount; ?> PHP</h3>
+        <div class="container m-0 p-0">
+            <p class="m-0 p-0 fs-5 fw-medium text-white text-center">Current Amount: ₱<?php echo $current_amount; ?> PHP</p>
+             <!-- <p class="m-0 p-0 fs-5 fw-medium text-white text-center">Current Amount: $11,100.00</p> -->
         </div>
 
-        <div class="container">
-            <form action="" method="post">
-                <button type="submit" name="1_peso" class="btn btn-primary">1 Peso Coin</button>
-                <button type="submit" name="5_peso" class="btn btn-primary">5 Peso Coin</button>
-                <button type="submit" name="10_peso" class="btn btn-primary">10 Peso Coin</button>
-                <button type="submit" name="20_peso" class="btn btn-primary">20 Peso Coin</button>
+        <div class="container m-0 p-3">
+            <form action="" method="post" class="container m-0 p-0 d-flex gap-3">
+                <button style="width: 250px;" type="submit" name="1_peso" class="btn btn-primary fw-bold">1 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="5_peso" class="btn btn-primary fw-bold">5 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="10_peso" class="btn btn-primary fw-bold">10 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="20_peso" class="btn btn-primary fw-bold">20 Peso Coin</button>
+            </form>
+        </div>
+
+        <div class="container mt-3 d-flex justify-content-center align-items-center gap-3">
+            <form action="" method="post" class="container m-0 p-0 d-flex flex-column justify-content-center align-items-center gap-3">
+                <div class="container m-0 p-0 d-flex gap-3 justify-content-center align-items-center">
+                    <button style="width: 100px; height: 70px;" type="submit" name="20_bill" class="btn btn-success fw-bold">20 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="50_bill" class="btn btn-success fw-bold">50 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="100_bill" class="btn btn-success fw-bold">100 Peso Bill</button>
+                </div>
+                <div class="container m-0 p-0 d-flex gap-3 justify-content-center align-items-center">
+                    <button style="width: 100px; height: 70px;" type="submit" name="200_bill" class="btn btn-success fw-bold">200 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="500_bill" class="btn btn-success fw-bold">500 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="1000_bill" class="btn btn-success fw-bold">1,000 Peso Bill</button>
+                </div>
             </form>
         </div>
 
         <div class="container mt-3">
-            <form action="" method="post">
-                <button type="submit" name="20_bill" class="btn btn-success">20 Peso Bill</button>
-                <button type="submit" name="50_bill" class="btn btn-success">50 Peso Bill</button>
-                <button type="submit" name="100_bill" class="btn btn-success">100 Peso Bill</button>
-                <button type="submit" name="200_bill" class="btn btn-success">200 Peso Bill</button>
-                <button type="submit" name="500_bill" class="btn btn-success">500 Peso Bill</button>
-                <button type="submit" name="1000_bill" class="btn btn-success">1,000 Peso Bill</button>
-            </form>
-        </div>
-
-        <div class="container mt-3">
-            <form action="" method="post" onsubmit="return confirmDelete()">
+            <form action="" method="post" onsubmit="return confirmDelete()" class="m-0 p-0">
                 <button name="reset-amount-btn" class="btn btn-danger">Reset Amount</button>
             </form>
         </div>
