@@ -28,8 +28,20 @@ function insert_db($conn, $amount, $type) {
 
 function reset_amount($conn) {
     $conn->query("TRUNCATE TABLE amount");
-
     // check if the current amount is empty or not
+}
+
+function deduct_amount($conn, $amount, $type) {
+    $stmt = $conn->prepare("INSERT INTO amount (amount, peso_type) VALUES (?, ?)");
+    $stmt->bind_param("is", $amount, $type); // "i" for integer, "s" for string
+    
+    if ($stmt->execute()) {
+        echo "<script>console.log('New record created successfully');</script>";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+    
+    $stmt->close();
 }
 
 // Query to retrieve all amounts from the database
@@ -124,9 +136,13 @@ $conn->close(); // Close the database connection
             </form>
         </div>
 
-        <div class="container mt-3">
+        <div class="container mt-3 d-flex gap-2 flex-column">
             <form action="" method="post" onsubmit="return confirmDelete()" class="m-0 p-0">
-                <button name="reset-amount-btn" class="btn btn-danger">Reset Amount</button>
+                <button name="reset-amount-btn" class="btn btn-danger fw-bold">Reset Amount</button>
+            </form>
+
+            <form action="" method="post">
+                <button name="deduct-amount-btn" class="btn btn-warning fw-bold">Deduct Amount</button>
             </form>
         </div>
     </div>

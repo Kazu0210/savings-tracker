@@ -40,11 +40,15 @@
             </form>
         </div>
 
-        <!-- <div class="container mt-3">
+        <div class="container mt-3 d-flex gap-2 flex-column">
             <form action="" method="post" onsubmit="return confirmDelete()">
-                <button name="reset-amount-btn" class="btn btn-danger">Reset Amount</button>
+                <button name="reset-amount-btn" class="btn btn-danger fw-bold">Reset Amount</button>
             </form>
-        </div> -->
+            
+            <form action="" method="post">
+                <button name="deduct-amount-btn" class="btn btn-warning fw-bold text-black">Deduct Amount</button>
+            </form>
+        </div>
     </div>
     <script>
         function confirmDelete() {
