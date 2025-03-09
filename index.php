@@ -25,6 +25,18 @@ function insert_db($conn, $amount, $type) {
 
     $stmt->close();
 }
+function insert_deduct_db($conn, $amount, $type) {
+    $stmt = $conn->prepare("INSERT INTO temp_data (amount, peso_type) VALUES (?, ?)");
+    $stmt->bind_param("is", $amount, $type); // "i" for integer, "s" for string
+
+    if ($stmt->execute()) {
+        echo "<script>console.log('New record created successfully');</script>";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
 
 function reset_amount($conn) {
     $conn->query("TRUNCATE TABLE amount");
@@ -84,12 +96,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         insert_db($conn, 1000, 'bill');
     } elseif (isset($_POST['reset-amount-btn'])) {
         reset_amount($conn);
+    } 
+    
+    // Only refresh the page if the action is not a "deduct" action
+    if (!isset($_POST['deduct-amount-btn']) &&
+        !isset($_POST['1_peso_deduct']) &&
+        !isset($_POST['5_peso_deduct']) &&
+        !isset($_POST['10_peso_deduct']) &&
+        !isset($_POST['20_peso_deduct']) &&
+        !isset($_POST['20_bill_deduct']) &&
+        !isset($_POST['50_bill_deduct']) &&
+        !isset($_POST['100_bill_deduct']) &&
+        !isset($_POST['200_bill_deduct']) &&
+        !isset($_POST['500_bill_deduct']) &&
+        !isset($_POST['1000_bill_deduct'])) {
+        
+        echo "<script>window.location.href='';</script>";
+        exit; // Stop script execution to avoid further processing
     }
-
-    // Refresh the page to update the displayed current amount
-    echo "<script>window.location.href='';</script>";
-    exit;
+    
+    // Deduct actions
+    if (isset($_POST['deduct-amount-btn'])) {
+        echo "Deduct amount button clicked";
+        // Perform additional actions if needed
+    } elseif (isset($_POST['1_peso_deduct'])) {
+        insert_deduct_db($conn, 1, 'coin');
+    } elseif (isset($_POST['5_peso_deduct'])) {
+        insert_deduct_db($conn, 5, 'coin');
+    } elseif (isset($_POST['10_peso_deduct'])) {
+        insert_deduct_db($conn, 10, 'coin');
+    } elseif (isset($_POST['20_peso_deduct'])) {
+        insert_deduct_db($conn, 20, 'coin');
+    } elseif (isset($_POST['20_bill_deduct'])) {
+        insert_deduct_db($conn, 20, 'bill');
+    } elseif (isset($_POST['50_bill_deduct'])) {
+        insert_deduct_db($conn, 50, 'bill');
+    } elseif (isset($_POST['100_bill_deduct'])) {
+        insert_deduct_db($conn, 100, 'bill');
+    } elseif (isset($_POST['200_bill_deduct'])) {
+        insert_deduct_db($conn, 200, 'bill');
+    } elseif (isset($_POST['500_bill_deduct'])) {
+        insert_deduct_db($conn, 500, 'bill');
+    } elseif (isset($_POST['1000_bill_deduct'])) {
+        insert_deduct_db($conn, 1000, 'bill');
+    }
 }
+
 
 $conn->close(); // Close the database connection
 ?>
@@ -102,8 +154,8 @@ $conn->close(); // Close the database connection
     <link rel="stylesheet" href="styles/css/bootstrap.min.css">
     <title>Savings Tracker</title>
 </head>
-<body style="background-color: black;">
-    <div class="container m-0 p-0">
+<body style="background-color: #000;">
+    <div class="container m-0 p-0" id="money_form">
         <div class="container m-0 p-3">
             <h1 class="fs-1 fw-bold text-white text-center">Savings Tracker</h1>
         </div>
@@ -144,14 +196,51 @@ $conn->close(); // Close the database connection
             <form action="" method="post">
                 <button name="deduct-amount-btn" class="btn btn-warning fw-bold">Deduct Amount</button>
             </form>
+            <button id="deduct-amount-btn" name="deduct-amount-btn" class="btn btn-warning fw-bold">Deduct Amount</button>
         </div>
     </div>
-    <script>
-        function confirmDelete() {
-            return confirm("Are you sure you want to delete all records? This action cannot be undone.");
-        }
-    </script>
 
-    <script src="styles/js/bootstrap.bundle.min.js"></script>
+    <div class="container m-0 p-0" id="deduct_money_form" style="display: none;">
+        <div class="container m-0 p-3">
+            <h1 class="fs-1 fw-bold text-white text-center">Deduct Money</h1>
+        </div>
+        <div class="container m-0 p-0">
+            <p class="m-0 p-0 fs-5 fw-medium text-white text-center">Current Amount: ₱<?php echo $current_amount; ?> PHP</p>
+             <!-- <p class="m-0 p-0 fs-5 fw-medium text-white text-center">Current Amount: $11,100.00</p> -->
+        </div>
+
+        <div class="container m-0 p-3">
+            <form action="" method="post" class="container m-0 p-0 d-flex gap-3">
+                <button style="width: 250px;" type="submit" name="1_peso_deduct" class="btn btn-primary fw-bold" onclick="event.preventDefault(); submitDeductForm('1_peso_deduct')">1 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="5_peso_deduct" class="btn btn-primary fw-bold" onclick="event.preventDefault();">5 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="10_peso_deduct" class="btn btn-primary fw-bold" onclick="event.preventDefault();">10 Peso Coin</button>
+                <button style="width: 250px;" type="submit" name="20_peso_deduct" class="btn btn-primary fw-bold" onclick="event.preventDefault();">20 Peso Coin</button>
+            </form>
+        </div>
+
+        <div class="container mt-3 d-flex justify-content-center align-items-center gap-3">
+            <form action="" method="post" class="container m-0 p-0 d-flex flex-column justify-content-center align-items-center gap-3">
+                <div class="container m-0 p-0 d-flex gap-3 justify-content-center align-items-center">
+                    <button style="width: 100px; height: 70px;" type="submit" name="20_bill_deduct" class="btn btn-success fw-bold" onclick="event.preventDefault();">20 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="50_bill_deduct" class="btn btn-success fw-bold" onclick="event.preventDefault();">50 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="100_bill_deduct" class="btn btn-success fw-bold" onclick="event.preventDefault();">100 Peso Bill</button>
+                </div>
+                <div class="container m-0 p-0 d-flex gap-3 justify-content-center align-items-center">
+                    <button style="width: 100px; height: 70px;" type="submit" name="200_bill_deduct" class="btn btn-success fw-bold" onclick="event.preventDefault();">200 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="500_bill_deduct" class="btn btn-success fw-bold" onclick="event.preventDefault();">500 Peso Bill</button>
+                    <button style="width: 100px; height: 70px;" type="submit" name="1000_bill_deduct" class="btn btn-success fw-bold" onclick="event.preventDefault();">1,000 Peso Bill</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container mt-3 d-flex gap-2 flex-column">
+            <form action="" method="post">
+                <button name="update-amount-btn" class="btn btn-success fw-bold">Update</button>
+                <button name="cancel-btn" class="btn btn-danger fw-bold">Cancel</button>
+            </form>
+        </div>
+
+    </div>
+    <script src="index.js"></script>
 </body>
 </html>
